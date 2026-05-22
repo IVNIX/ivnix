@@ -3,6 +3,7 @@ import { Inter, Quicksand } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_TAGLINE } from "@/config/site";
 import { getMetadataBaseUrl } from "@/lib/site-url";
+import { VercelInsights } from "@/components/vercel-insights";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +40,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${brandRounded.variable}`}>
       {/* Browser extensions often inject attributes onto <body> before React hydrates. */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <VercelInsights />
+      </body>
     </html>
   );
 }
