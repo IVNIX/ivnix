@@ -21,6 +21,11 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 }
 
+function prefersCompactRibbon(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(max-width: 639px)").matches ?? false;
+}
+
 export function TipAnnouncementBar() {
   const regionId = useId();
   const slideRef = useRef<HTMLDivElement>(null);
@@ -31,7 +36,13 @@ export function TipAnnouncementBar() {
   const reducedMotion = useRef(false);
 
   useEffect(() => {
-    reducedMotion.current = prefersReducedMotion();
+    const reduced = prefersReducedMotion();
+    const compact = prefersCompactRibbon();
+    reducedMotion.current = reduced || compact;
+    if (compact || reduced) {
+      setSlideOpen(true);
+      setFillArmed(true);
+    }
     setHydrated(true);
   }, []);
 
@@ -88,16 +99,11 @@ export function TipAnnouncementBar() {
     };
   }, [slideOpen]);
 
-  if (!hydrated) {
-    return null;
-  }
-
   return (
     <div
       ref={slideRef}
       className={cn("ivnix-tip-ribbon-slide", slideOpen && "ivnix-tip-ribbon-slide--open")}
     >
-      {/* Painted slab + copy translate together inside `.ivnix-tip-ribbon-host` (fixed slot — no layout shove). */}
       <div
         ref={slabRef}
         id={regionId}
@@ -109,18 +115,17 @@ export function TipAnnouncementBar() {
           ribbonText,
         )}
       >
-        <div className="ivnix-tip-ribbon-prose flex min-h-[52px] w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:flex-nowrap sm:gap-x-3">
-          <span>
-            {SITE_NAME} is solo-built and stays free. If a calculator gave you certainty, a small tip buys the next upgrade.
-          </span>{" "}
+        <p className="ivnix-tip-ribbon-prose w-full px-4 py-3 text-center text-[13px] leading-relaxed text-pretty sm:min-h-[52px] sm:px-8 sm:py-0 sm:text-[14px] sm:leading-normal">
+          {SITE_NAME} is solo-built and stays free. If a calculator gave you certainty, a small tip buys the next
+          upgrade.{" "}
           <Link
             href="/support"
             prefetch={false}
-            className={cn("ivnix-tip-ribbon-link whitespace-nowrap", ribbonLinkInteractions)}
+            className={cn("ivnix-tip-ribbon-link font-medium whitespace-nowrap", ribbonLinkInteractions)}
           >
             Tip me&nbsp;here&nbsp;›
           </Link>
-        </div>
+        </p>
       </div>
     </div>
   );

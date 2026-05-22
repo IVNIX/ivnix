@@ -88,14 +88,20 @@
     transform: rotate(180deg);
   }
 
-  /** Matches one ribbon row (~52px); avoids the old 6rem “dead zone” below the copy. */
+  /** Single-line slot on sm+; auto height on narrow viewports so wrapped copy is not clipped. */
   .ivnix-tip-ribbon-host {
     position: relative;
     width: 100%;
-    height: 3.25rem;
+    min-height: 3.25rem;
     flex-shrink: 0;
     overflow: hidden;
     background-color: var(--site-canvas);
+  }
+
+  @media (min-width: 640px) {
+    .ivnix-tip-ribbon-host {
+      height: 3.25rem;
+    }
   }
 
   /**
@@ -115,6 +121,36 @@
 
   .ivnix-tip-ribbon-slide.ivnix-tip-ribbon-slide--open > .ribbon-content-wrapper {
     transform: translate3d(0, 0, 0);
+  }
+
+  @media (max-width: 639px) {
+    .ivnix-tip-ribbon-host {
+      height: auto;
+      overflow: visible;
+    }
+
+    .ivnix-tip-ribbon-slide {
+      position: static;
+      overflow: visible;
+    }
+
+    .ivnix-tip-ribbon-slide > .ribbon-content-wrapper {
+      transform: none !important;
+      transition: none;
+    }
+
+    /* Static mobile ribbon — no slide/fill animation or color-mix (Safari-safe). */
+    .ivnix-tip-ribbon-content {
+      --ivnix-tip-t: 1;
+      animation: none !important;
+      background-color: #f5f5f7;
+      color: #1d1d1f;
+      border-bottom: 1px solid #e5e5e7;
+    }
+
+    .ivnix-tip-ribbon-link {
+      color: #0047ff;
+    }
   }
 
   @keyframes ivnix-tip-ribbon-fill {

@@ -249,15 +249,8 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
           {/*
             Same horizontal rhythm as calculators layout (max-w-7xl + px-4/md:px-8).
             Symmetric 1fr | center | 1fr keeps search aligned with max-w-xl below.
-            Tip CTA is absolute right-4 to mirror sidebar logo row px-4 (not max-w-7xl inset).
           */}
-          <div className="pointer-events-none absolute inset-y-0 right-4 z-20 flex items-center">
-            <Link href="/support" prefetch={false} className={tipMeClasses}>
-              Tip me
-            </Link>
-          </div>
-
-          <div className="mx-auto grid h-14 w-full max-w-7xl grid-cols-[minmax(0,1fr)_minmax(0,36rem)_minmax(0,1fr)] items-center gap-x-2 px-4 max-sm:pr-[5.5rem] md:gap-x-4 md:px-8">
+          <div className="mx-auto grid h-14 w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 px-4 md:grid-cols-[minmax(0,1fr)_minmax(0,36rem)_minmax(0,1fr)] md:gap-x-4 md:px-8">
             <div className="flex min-w-0 justify-self-start">
               <button
                 type="button"
@@ -273,7 +266,11 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
               <CalculatorSearch items={searchItems} variant="dashboard" />
             </div>
 
-            <span className="min-w-0" aria-hidden="true" />
+            <div className="relative z-10 flex shrink-0 justify-self-end">
+              <Link href="/support" prefetch={false} className={tipMeClasses}>
+                Tip me
+              </Link>
+            </div>
           </div>
         </header>
         </div>
