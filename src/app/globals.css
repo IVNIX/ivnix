@@ -104,6 +104,13 @@
     }
   }
 
+  @media (max-width: 639px) {
+    /* Taller slot so wrapped copy + link are not clipped; slide/fill animation unchanged. */
+    .ivnix-tip-ribbon-host {
+      height: 4.25rem;
+    }
+  }
+
   /**
    * Ribbon drop: slab (bg + type) translates as one unit inside a reserved-height host (`ivnix-tip-ribbon-host`).
    * Do not animate outer `max-height` in-flow — it shoves `<main>` downward during the tween.
@@ -115,42 +122,18 @@
   }
 
   .ivnix-tip-ribbon-slide > .ribbon-content-wrapper {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
     transform: translate3d(0, -100%, 0);
     transition: transform 800ms ease-in-out;
   }
 
   .ivnix-tip-ribbon-slide.ivnix-tip-ribbon-slide--open > .ribbon-content-wrapper {
     transform: translate3d(0, 0, 0);
-  }
-
-  @media (max-width: 639px) {
-    .ivnix-tip-ribbon-host {
-      height: auto;
-      overflow: visible;
-    }
-
-    .ivnix-tip-ribbon-slide {
-      position: static;
-      overflow: visible;
-    }
-
-    .ivnix-tip-ribbon-slide > .ribbon-content-wrapper {
-      transform: none !important;
-      transition: none;
-    }
-
-    /* Static mobile ribbon — no slide/fill animation or color-mix (Safari-safe). */
-    .ivnix-tip-ribbon-content {
-      --ivnix-tip-t: 1;
-      animation: none !important;
-      background-color: #f5f5f7;
-      color: #1d1d1f;
-      border-bottom: 1px solid #e5e5e7;
-    }
-
-    .ivnix-tip-ribbon-link {
-      color: #0047ff;
-    }
   }
 
   @keyframes ivnix-tip-ribbon-fill {
@@ -165,6 +148,7 @@
 
   .ivnix-tip-ribbon-content {
     box-sizing: border-box;
+    width: 100%;
     --ivnix-tip-t: 0;
     background-color: color-mix(
       in srgb,

@@ -21,11 +21,6 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 }
 
-function prefersCompactRibbon(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia?.("(max-width: 639px)").matches ?? false;
-}
-
 export function TipAnnouncementBar() {
   const regionId = useId();
   const slideRef = useRef<HTMLDivElement>(null);
@@ -36,13 +31,7 @@ export function TipAnnouncementBar() {
   const reducedMotion = useRef(false);
 
   useEffect(() => {
-    const reduced = prefersReducedMotion();
-    const compact = prefersCompactRibbon();
-    reducedMotion.current = reduced || compact;
-    if (compact || reduced) {
-      setSlideOpen(true);
-      setFillArmed(true);
-    }
+    reducedMotion.current = prefersReducedMotion();
     setHydrated(true);
   }, []);
 
@@ -115,17 +104,19 @@ export function TipAnnouncementBar() {
           ribbonText,
         )}
       >
-        <p className="ivnix-tip-ribbon-prose w-full px-4 py-3 text-center text-[13px] leading-relaxed text-pretty sm:min-h-[52px] sm:px-8 sm:py-0 sm:text-[14px] sm:leading-normal">
-          {SITE_NAME} is solo-built and stays free. If a calculator gave you certainty, a small tip buys the next
-          upgrade.{" "}
+        <div className="ivnix-tip-ribbon-prose flex w-full flex-col items-center justify-center gap-1 px-4 py-2 text-center text-[13px] leading-snug text-pretty sm:h-full sm:flex-row sm:flex-nowrap sm:items-center sm:justify-center sm:gap-x-1.5 sm:px-8 sm:py-0 sm:text-[14px] sm:leading-normal">
+          <span>
+            {SITE_NAME} is solo-built and stays free. If a calculator gave you certainty, a small tip buys the next
+            upgrade.
+          </span>
           <Link
             href="/support"
             prefetch={false}
-            className={cn("ivnix-tip-ribbon-link font-medium whitespace-nowrap", ribbonLinkInteractions)}
+            className={cn("ivnix-tip-ribbon-link shrink-0 whitespace-nowrap", ribbonLinkInteractions)}
           >
             Tip me&nbsp;here&nbsp;›
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
