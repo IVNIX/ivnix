@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import { CATEGORY_NAV } from "@/data/navigation";
 import { POPULAR_CALCULATORS } from "@/data/popular-calculators";
-import { SITE_NAME } from "@/config/site";
+import { SITE_NAME, COPYRIGHT_NOTICE } from "@/config/site";
 import { BrandLogo } from "@/components/brand-logo";
 
 function FooterLink({
@@ -135,9 +135,10 @@ export function MarketingFooter() {
             <FooterLink href="#">Privacy</FooterLink>
             <FooterLink href="#">Cookies</FooterLink>
             <FooterLink href="#">Terms of service</FooterLink>
-            <span>
+            <span title={COPYRIGHT_NOTICE}>
               © {new Date().getFullYear()}{" "}
               <span className="font-brand text-[#0047FF]">{SITE_NAME}</span>
+              . All rights reserved.
             </span>
           </div>
         </div>

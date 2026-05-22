@@ -2,6 +2,7 @@
   "name": "growthcalc",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "clean": "node scripts/clean-next.js",
     "dev": "npm run clean && npx --yes kill-port@2.0.1 3000 && next dev --port 3000",
